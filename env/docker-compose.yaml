@@ -1,0 +1,18 @@
+version: "3.4"
+services:
+  pkd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - "../:/usr/src/pkd:rw"
+    image: "pkdenv"
+    working_dir: /usr/src/pkd
+    entrypoint: python3 NLI_KD_training.py --device cuda:0 --n_gpus 1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '1' ]
+              capabilities: [ gpu ]

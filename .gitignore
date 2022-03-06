@@ -84,7 +84,6 @@ celerybeat-schedule
 # Environments
 .env
 .venv
-env/
 venv/
 ENV/
 env.bak/
@@ -102,3 +101,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+/data/outputs/KD/RTE/teacher_12layer
+/data/models/pretrained/bert-base-uncased/pytorch_model.bin

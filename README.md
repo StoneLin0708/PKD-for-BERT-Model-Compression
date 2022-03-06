@@ -9,6 +9,26 @@ conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 pip install -r requirements.txt
 ```
 
+## Docker
+Requirements
+  - docker 20
+  - docker compose 1.28
+  - nvidia docker 2
+
+Install script for ubuntu 20
+
+```bash
+./env/install_docker_ubuntu20.sh
+```
+
+Run NLI_KD_training.py inside container
+- Note that the docker-compose will build image for the first time, which will take few minutes.
+- Only ** gpu 1 ** will be pass to container by default, change env/docker-compose.yaml line 17 for another gpu
+```
+cd env
+docker-compose up
+```
+
 
 ## Training
 #### Objective Function

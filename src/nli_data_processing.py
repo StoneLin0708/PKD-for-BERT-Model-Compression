@@ -4,6 +4,7 @@ import os
 import logging
 import glob
 import torch
+import unicodedata
 
 import pandas as pd
 from torch.utils.data import TensorDataset, DataLoader, SequentialSampler, RandomSampler
@@ -65,6 +66,9 @@ class DataProcessor(object):
 
     @classmethod
     def _read_tsv(cls, input_file, quotechar=None):
+        r = pd.read_csv(input_file, delimiter='\t').to_numpy().tolist()
+        r = [[unicodedata.normalize('NFKC',j) if isinstance(j,str) else j for j in i] for i in r]
+        return r
         """Reads a tab separated value file."""
         with open(input_file, "r") as f:
             reader = csv.reader(f, delimiter="\t", quotechar=quotechar)
@@ -512,6 +516,9 @@ def convert_examples_to_features(examples, label_list, max_seq_length,
         assert len(segment_ids) == max_seq_length
 
         if output_mode == "classification":
+            #print(example.label)
+            #print(example.guid)
+            #print(label_map)
             label_id = label_map[example.label]
         elif output_mode == "regression":
             label_id = float(example.label)
